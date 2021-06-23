@@ -12,8 +12,6 @@ export default function WindTable() {
 
     const utils = new Utils();
     const appid = encodeURIComponent('7393657da231c8ab8a53430e14f8dae5')
-    const lat = encodeURIComponent('41.92597089822972')
-    const lon = encodeURIComponent('12.125790593408375')
     const units = encodeURIComponent('metric')
     const lang = encodeURIComponent('it')
 
@@ -24,11 +22,18 @@ export default function WindTable() {
     function update() {
         setLoading(true)
         setData([]);
-        fetch(`http://api.openweathermap.org/data/2.5/onecall?appid=${appid}&lat=${lat}&lon=${lon}&units=${units}&lang=${lang}`)
-            .then((response) => response.json())
-            .then((json) => setData(json.hourly))
-            .catch((error) => console.error(error))
-            .finally(() => setLoading(false));
+        utils.findCoordinates()
+            .then(loc => {
+                if (loc) {
+                    let lat = encodeURIComponent(loc?.coords.latitude)
+                    let lon = encodeURIComponent(loc?.coords.longitude)
+                    fetch(`http://api.openweathermap.org/data/2.5/onecall?appid=${appid}&lat=${lat}&lon=${lon}&units=${units}&lang=${lang}`)
+                        .then((response) => response.json())
+                        .then((json) => setData(json.hourly))
+                        .catch((error) => console.error(error))
+                        .finally(() => setLoading(false));
+                }
+            }).catch((error) => console.error(error))
     }
 
     const createTable = (h: Hour[], i: any) => {
@@ -55,7 +60,7 @@ export default function WindTable() {
         const flex = [1, 0.7, 2, 0.5];
 
         return <View key={i}>
-            <Text style={styles.TableTitleStyle}>{utils.titleDate(h[0])}</Text>
+            <Text style={styles.TableTitleStyle}>{utils.titleDate(h[0].dt)}</Text>
             <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={update} />}>
                 <Table borderStyle={{ borderWidth: 0.5, borderColor: '#004B63' }} style={{ marginRight: 10 }}>
                     <Row data={headers} flexArr={flex} style={styles.HeadStyle} textStyle={styles.HeadTextStyle} />

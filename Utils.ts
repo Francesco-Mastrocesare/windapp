@@ -1,4 +1,6 @@
 import { Alert } from 'react-native';
+import * as Location from 'expo-location';
+import { LocationAccuracy, LocationObject, LocationOptions } from 'expo-location';
 
 export interface Hour {
 	dt: number;
@@ -45,8 +47,8 @@ export class Utils {
 		return this.groupBy(data, item => new Date(item.dt * 1000).getDate());
 	}
 
-	titleDate = (h: Hour) => {
-		const date = new Date(h.dt * 1000)
+	titleDate = (h: number) => {
+		const date = new Date(h * 1000)
 		return date.getDate() + ' ' + this.monthNames[date.getMonth()] + ' ' + date.getFullYear()
 	}
 
@@ -58,4 +60,14 @@ export class Utils {
 		const descCapital = desc.charAt(0).toUpperCase() + desc.substr(1);
 		Alert.alert(descCapital);
 	}
+
+	findCoordinates = async () => {
+			let { status } = await Location.requestForegroundPermissionsAsync();
+			if (status !== 'granted') {
+				console.log('Permission to access location was denied');
+				return null;
+			}
+			return await Location.getCurrentPositionAsync({ accuracy: LocationAccuracy.High });
+		}
+	
 }
