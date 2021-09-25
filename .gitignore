@@ -52,3 +52,13 @@ buck-out/
 # Expo
 .expo/
 web-build/
+
+.vscode
+android
+ios
+.idea
+.expo
+node_modules
+__tests__
+.buckconfig
+babel.config.ts

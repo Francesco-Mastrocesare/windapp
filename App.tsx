@@ -11,8 +11,8 @@ import Home from './components/Home';
 export default function App() {
 
 	const Stack = createStackNavigator();
-	
-	
+
+
 	return (
 		<NavigationContainer ref={navigationRef}>
 			<Stack.Navigator>

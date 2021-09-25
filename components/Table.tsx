@@ -51,7 +51,7 @@ export default function WindTable() {
         const mapRow = h.map(d =>
             new Array<any>(
                 utils.prettyDate(d.dt),
-                (d.wind_speed * 1.944).toFixed(1),
+                (d.wind_speed * 1.94384).toFixed(1),
                 utils.toDirections(d.wind_deg),
                 extractIcon(d)
             )
@@ -73,7 +73,7 @@ export default function WindTable() {
     const loadingView =
         <View style={styles.ImageView}>
             <View>
-                <Image style={styles.Image} source={require('../leaf.gif')} />
+                <Image style={styles.Image} source={require('../resources/leaf.gif')} />
             </View>
         </View>
 

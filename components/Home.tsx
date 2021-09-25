@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { StyleSheet, RefreshControl, View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Utils } from '../Utils';
 import { Current } from '../models/Current';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home() {
     const [isLoading, setLoading] = useState(true);
@@ -11,6 +12,8 @@ export default function Home() {
     const appid = encodeURIComponent('7393657da231c8ab8a53430e14f8dae5')
     const units = encodeURIComponent('metric')
     const lang = encodeURIComponent('it')
+
+    useFocusEffect(React.useCallback(() => update(), []));
 
     useEffect(() => update(), [])
 
@@ -57,7 +60,7 @@ export default function Home() {
     const loading =
         <View style={styles.ImageView}>
             <View>
-                <Image style={styles.Image} source={require('../leaf.gif')} />
+                <Image style={styles.Image} source={require('../resources/leaf.gif')} />
             </View>
         </View>
 
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
     TitleStyle: {
         textAlign: 'center',
         color: textcolor,
-        fontSize: 48
+        fontSize: 38
     },
     TableTitleStyle: {
         textAlign: 'center',

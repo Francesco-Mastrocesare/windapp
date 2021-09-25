@@ -1,6 +1,5 @@
 import { Alert } from 'react-native';
 import * as Location from 'expo-location';
-import { LocationAccuracy, LocationObject, LocationOptions } from 'expo-location';
 
 export interface Hour {
 	dt: number;
@@ -67,7 +66,7 @@ export class Utils {
 				console.log('Permission to access location was denied');
 				return null;
 			}
-			return await Location.getCurrentPositionAsync({ accuracy: LocationAccuracy.High });
+			return await Location.getLastKnownPositionAsync({});
 		}
 	
 }

@@ -10,7 +10,12 @@
     ],
     "android": {
       "package": "com.yourcompany.yourappname",
+      "permissions": [
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
       "versionCode": 1
-    }
+    },
+    "entryPoint": ".vscode\\exponentIndex.js"
   }
 }
