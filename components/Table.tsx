@@ -7,10 +7,12 @@ import { styles } from '../Styles';
 import { Hour } from '../Utils';
 import PagerView from 'react-native-pager-view';
 import Loader from './Loader';
+import Dots from 'react-native-dots-pagination';
 
 export default function WindTable() {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState<Hour[]>();
+    const [active, setActive] = useState<number>(0);
     const utils = new Utils();
 
     useEffect(() => { update() }, []);
@@ -24,6 +26,10 @@ export default function WindTable() {
     }
 
     const createTable = (h: Hour[], i: any) => {
+        if (i === 0) {
+            h.shift()
+        }
+
         const extractIcon = (d: Hour) => {
             return <TouchableOpacity onPress={() => utils.weatherDescription(d.weather[0].description)}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -59,13 +65,19 @@ export default function WindTable() {
         </View>
     }
 
+    const groupedData = utils.group(data ? data : [])
+
     const tableView =
         <View style={styles.container}>
-            <PagerView style={styles.pagerView} initialPage={0} scrollEnabled={true} showPageIndicator={true}>
+            <PagerView style={styles.pagerView} 
+                initialPage={0} 
+                scrollEnabled={true} 
+                onPageSelected={(e) => setActive(e.nativeEvent.position)}>
                 {
-                    utils.group(data ? data : []).map((h, i) => createTable(h, i))
+                    groupedData.map((h, i) => createTable(h, i))
                 }
             </PagerView>
+            <Dots activeColor={"#eb6e4b"} length={groupedData?.length} active={active} />
         </View>
 
     return isLoading ? <Loader /> : tableView;

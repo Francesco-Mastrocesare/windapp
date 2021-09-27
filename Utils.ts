@@ -78,7 +78,6 @@ export class Utils {
 
 	private handleErrors = (response: Response) => {
         if (!response.ok) {
-			console.log("error")
             Alert.alert(
                 "Error",
                 "Open Weather requests limit exceeded",
@@ -98,7 +97,6 @@ export class Utils {
 	handleRequest = async (endpoint: string) => {
 		const extra = Constants.manifest?.extra
 		let url = `${extra?.OW_API_URL}${endpoint}?appid=${extra?.OW_API_KEY}&lat=${extra?.LAT}&lon=${extra?.LON}&units=${extra?.UNITS}&lang=${extra?.LANG}`
-		console.log(url)
 		let response = await fetch(url);
 		return this.handleErrors(response).json()
 	}
