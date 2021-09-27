@@ -1,6 +1,5 @@
 import React from 'react';
 import WindTable from './components/Table';
-import Settings from './components/Settings';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,7 +20,6 @@ export default function App() {
 					component={Home}
 				/>
 				<Stack.Screen name="Previsioni" component={WindTable} />
-				<Stack.Screen name="Settings" component={Settings} />
 			</Stack.Navigator>
 			<Navigator />
 		</NavigationContainer>

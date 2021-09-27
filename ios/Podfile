@@ -20,4 +20,6 @@ target 'WindApp' do
   # end
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
 end

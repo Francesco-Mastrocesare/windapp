@@ -1,8 +1,10 @@
-import { Alert } from 'react-native';
+import { BackHandler, Alert } from 'react-native';
 import * as Location from 'expo-location';
+import Constants from 'expo-constants';
 
 export interface Hour {
 	dt: number;
+	temp: number;
 	wind_speed: number;
 	wind_deg: string;
 	weather: [{
@@ -17,6 +19,7 @@ export class Utils {
 
 	monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
 		"Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
 	DIRECTIONS = ["N","N/NE","NE","E/NE","E","E/SE","SE",
 		"S/SE","S","S/SW","SW","W/SW","W","W/NW","NW","N/NW","N"];
 
@@ -42,6 +45,8 @@ export class Utils {
 		}).substring(0, 5);
 	}
 
+	toTemp = (temp: number) => temp.toFixed(0)
+
 	group = (data: Hour[]) => {
 		return this.groupBy(data, item => new Date(item.dt * 1000).getDate());
 	}
@@ -61,12 +66,46 @@ export class Utils {
 	}
 
 	findCoordinates = async () => {
-			let { status } = await Location.requestForegroundPermissionsAsync();
-			if (status !== 'granted') {
-				console.log('Permission to access location was denied');
-				return null;
-			}
-			return await Location.getLastKnownPositionAsync({});
+		let { status } = await Location.requestForegroundPermissionsAsync();
+		if (status !== 'granted') {
+			console.log('Permission to access location was denied');
+			return null;
 		}
+		return await Location.getLastKnownPositionAsync({});
+	}
+
+	toKnots = (speed: number) => (speed * 1.94384).toFixed(1);
+
+	private handleErrors = (response: Response) => {
+        if (!response.ok) {
+			console.log("error")
+            Alert.alert(
+                "Error",
+                "Open Weather requests limit exceeded",
+				[
+					{
+					  text: "Exit",
+					  onPress: () => BackHandler.exitApp(),
+					  style: "cancel",
+					},
+				  ]
+              );
+        }
+
+        return response;
+    }
+
+	handleRequest = async (endpoint: string) => {
+		const extra = Constants.manifest?.extra
+		let url = `${extra?.OW_API_URL}${endpoint}?appid=${extra?.OW_API_KEY}&lat=${extra?.LAT}&lon=${extra?.LON}&units=${extra?.UNITS}&lang=${extra?.LANG}`
+		console.log(url)
+		let response = await fetch(url);
+		return this.handleErrors(response).json()
+	}
+	
+	getIconUrl = (icon: string, size?: string) => 
+		size
+			? `https://openweathermap.org/img/wn/${icon}@${size}.png`
+			: `https://openweathermap.org/img/wn/${icon}.png`
 	
 }
