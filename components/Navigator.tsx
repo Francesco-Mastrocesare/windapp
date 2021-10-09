@@ -12,6 +12,9 @@ export const Navigator = () => {
             <TouchableOpacity style={styles.ImageView} activeOpacity={0.5} onPress={() => RootNavigation.navigate('Previsioni') }>
                 <Image style={styles.Image} source={require('../resources/wind.png')} />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.ImageView} activeOpacity={0.5} onPress={() => RootNavigation.navigate('Push') }>
+                <Image style={styles.Image} source={require('../resources/settings.png')} />
+            </TouchableOpacity>
         </View>
     );
 };

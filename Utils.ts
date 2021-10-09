@@ -1,18 +1,8 @@
 import { BackHandler, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import Constants from 'expo-constants';
-
-export interface Hour {
-	dt: number;
-	temp: number;
-	wind_speed: number;
-	wind_deg: string;
-	weather: [{
-		main: string;
-		icon: any;
-		description: string;
-	}];
-}
+import * as Notifications from 'expo-notifications';
+import { Hour } from './models/Hour';
 
 export class Utils {
     constructor() { }
@@ -106,4 +96,29 @@ export class Utils {
 			? `https://openweathermap.org/img/wn/${icon}@${size}.png`
 			: `https://openweathermap.org/img/wn/${icon}.png`
 	
+	getPushToken = () => {
+		if (!Constants.isDevice) {
+			return Promise.reject('Must use physical device for Push Notifications');
+		}
+	
+		try {
+			return Notifications.getPermissionsAsync()
+				.then((statusResult) => {
+					return statusResult.status !== 'granted'
+						? Notifications.requestPermissionsAsync()
+						: statusResult;
+				})
+				.then((statusResult) => {
+					if (statusResult.status !== 'granted') {
+						throw 'Failed to get push token for push notification!';
+					}
+					return Notifications.getExpoPushTokenAsync();
+				})
+				.then((tokenData) => {
+					return tokenData.data
+				});
+		} catch (error) {
+			return Promise.reject("Couldn't check notifications permissions");
+		}
+	};
 }

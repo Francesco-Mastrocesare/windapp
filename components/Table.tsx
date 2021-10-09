@@ -4,7 +4,7 @@ import { RefreshControl, View, Text, ScrollView, TouchableOpacity, Image } from 
 import { Table, Row, Rows } from 'react-native-table-component';
 import { Utils } from '../Utils';
 import { styles } from '../Styles';
-import { Hour } from '../Utils';
+import { Hour } from '../models/Hour';
 import PagerView from 'react-native-pager-view';
 import Loader from './Loader';
 import Dots from 'react-native-dots-pagination';
@@ -15,7 +15,7 @@ export default function WindTable() {
     const [active, setActive] = useState<number>(0);
     const utils = new Utils();
 
-    useEffect(() => { update() }, []);
+    useEffect(() => update() , []);
 
     function update() {
         setLoading(true)

@@ -25,7 +25,7 @@ export default function Home() {
     const render = data ?
         <ScrollView refreshControl={<RefreshControl refreshing={isLoading} onRefresh={update} />}>
             <View style={styles.container}>
-                <Text style={styles.TitleStyle}>Hotspot</Text>
+                <Text style={styles.TitleStyle}>Kitesurf</Text>
                 <Text style={styles.TitleStyle}>{extra?.PLACE}</Text>
                 <Text style={styles.TitleStyle}>{utils.titleDate(data.dt)}</Text>
                 <Text style={styles.TitleStyle}>{utils.prettyDate(data.dt)}</Text>

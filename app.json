@@ -5,6 +5,7 @@
     "name": "WindApp",
     "slug": "WindApp",
     "version": "1.0.0",
+    "icon": "./resources/wind.png",
     "extra": {
       "OW_API_URL": "http://api.openweathermap.org/data/2.5",
       "OW_API_KEY": "7393657da231c8ab8a53430e14f8dae5",
@@ -12,14 +13,17 @@
       "LANG": "it",
       "LAT": "41.92591224357518",
       "LON": "12.1257649558161",
-      "PLACE": "Marina di San Nicola"
+      "PLACE": "Marina di San Nicola",
+      "PUSH_NOTIFICATIONS_URL": "http://ec2-3-144-69-165.us-east-2.compute.amazonaws.com:8080"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
+      "googleServicesFile": "./google-services.json",
       "package": "com.fmastroccesare.windapp",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": ["NOTIFICATIONS"]
     },
     "entryPoint": ".vscode\\exponentIndex.js"
   }

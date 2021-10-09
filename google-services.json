@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "549241286901",
+    "project_id": "windapp-cebbc",
+    "storage_bucket": "windapp-cebbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549241286901:android:db23d79f12a03543d495bc",
+        "android_client_info": {
+          "package_name": "com.fmastroccesare.windapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549241286901-8r6crc0j93ar6219i2ha50fnb2njke9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiHiJ6SkhYY2CH8iMWJwhlrvDcPK4aD2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549241286901-8r6crc0j93ar6219i2ha50fnb2njke9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
